@@ -11,7 +11,7 @@ class SbomTest(unittest.TestCase):
 
 
     def test_sbom_100_ShouldReturnArthurName(self):
-        myName = 'jdg0078'
+        myName = 'icw0001'
         result = app._getAuthor('../../')
         resultingAuthorName = result['author']
         self.assertEqual(resultingAuthorName, myName)

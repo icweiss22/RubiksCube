@@ -1,3 +1,8 @@
+'''
+Created on Jan 25, 2023
+
+@author: isaacweiss
+'''
 from unittest import TestCase
 from rubik.view.rotate import rotate
  
