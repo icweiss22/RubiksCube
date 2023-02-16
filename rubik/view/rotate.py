@@ -1,4 +1,5 @@
 from rubik.model.cube import Cube
+import collections
 
 def rotate(parms):
     """Return rotated cube""" 
