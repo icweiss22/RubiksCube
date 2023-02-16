@@ -6,8 +6,8 @@ def rotate(parms):
     result = {}
     
     # validation
-    if _cubeValidation(parms).get('status') != 'ok':
-        return _cubeValidation(parms)
+    if cubeValidation(parms).get('status') != 'ok':
+        return cubeValidation(parms)
     
     encodedCube = Cube(parms.get('cube'))
     directions = parms.get('dir', None)
@@ -22,7 +22,7 @@ def rotate(parms):
                         
     return result
 
-def _cubeValidation(params):
+def cubeValidation(params):
     result = {}
 
     try:
