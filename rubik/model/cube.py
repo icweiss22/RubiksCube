@@ -71,7 +71,7 @@ class Cube:
         self._cube = ''.join(rotatingCube)
             
         
-    def _makeCrossGeneric(self):
+    def makeCrossGeneric(self):
         cross = [self.get()[37], self.get()[39], self.get()[41], self.get()[43]]
         if any(i != self.get()[49] for i in cross):
             while True:

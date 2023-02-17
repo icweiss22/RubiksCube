@@ -15,7 +15,7 @@ def solveBottomCross(theCube: Cube) -> str:
     '''  
     bottom_cross = [theCube.get()[46], theCube.get()[48], theCube.get()[50], theCube.get()[52]]
     if any(i != theCube.get()[49] for i in bottom_cross): # bottom cross not yet solved
-        theCube._makeCrossGeneric()
+        theCube.makeCrossGeneric()
         if theCube.get()[1] != theCube.get()[4]: #front 
             while True:
                 theCube.rotate('U')
