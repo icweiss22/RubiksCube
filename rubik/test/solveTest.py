@@ -21,6 +21,13 @@ class SolveTest(TestCase):
         parms = {'cube': 'xxx'}
         result = solve(parms)
         self.assertNotEqual('ok', result.get('status'))
+        
+    def test_cubeAlreadyDone(self):
+        cubeStr = 'bbbbbbbbbrrrrrrrrrgggggggggoooooooooyyyyyyyyywwwwwwwww'
+        result = solve({'cube': cubeStr})
+        myCube = cube.Cube(cubeStr)
+        myCube.rotate(result['solution'])
+        self.assertEqual(myCube.getSolution(), '')
     '''
     Back cross
     '''
@@ -39,14 +46,6 @@ class SolveTest(TestCase):
         myCube.rotate(result['solution'])
         backCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
         self.assertTrue(all(i == myCube.get()[49] for i in backCross))
-        
-    def test_makeBackCrossAlreadyDone(self):
-        cubeStr = 'worrbbbbobygyrgwrgogyogbrgyoyroobroobryryggywwwgwwwbwy'
-        result = solve({'cube': cubeStr})
-        myCube = cube.Cube(cubeStr)
-        myCube.rotate(result['solution'])
-        self.assertEqual(myCube.getSolution(), '')
-    
         
     '''
     Back layer
@@ -68,9 +67,4 @@ class SolveTest(TestCase):
         backFace = myCube.get()[45:54]
         print(myCube.getSolution())
         self.assertTrue(all(i == myCube.get()[49] for i in backFace))
-        
-    def test_makeBackLayerAlreadyDone(self):
-        cubeStr = 'bbbbbbbbbrrrrrrrrrgggggggggoooooooooyyyyyyyyywwwwwwwww'
-        result = solve({'cube': cubeStr})
-        self.assertEqual(result['solution'], '')
     
