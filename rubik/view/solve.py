@@ -25,8 +25,37 @@ def solve(parms):
     solveUpSurface(theCube)        #iteration 5
     solveUpperLayer(theCube)       #iteration 6
     
+    cleanSolution(theCube)
+    
     result['solution'] = theCube.getSolution()
     result['status'] = 'ok'    
     result['integrity'] = ''       #iteration 3
                      
     return result
+
+def cleanSolution(theCube: Cube):
+    mutableList = theCube.getSolution()
+    # turn three counterclockwises into a clockwise
+    mutableList = mutableList.replace('fff', 'F')
+    mutableList = mutableList.replace('fff', 'F')
+    mutableList = mutableList.replace('rrr', 'R')
+    mutableList = mutableList.replace('bbb', 'B')
+    mutableList = mutableList.replace('lll', 'L')
+    mutableList = mutableList.replace('uuu', 'U')
+    mutableList = mutableList.replace('ddd', 'D')
+    # turn three clockwises into a counterclockwise
+    mutableList = mutableList.replace('FFF', 'f')
+    mutableList = mutableList.replace('RRR', 'r')
+    mutableList = mutableList.replace('BBB', 'b')
+    mutableList = mutableList.replace('LLL', 'l')
+    mutableList = mutableList.replace('UUU', 'u')
+    mutableList = mutableList.replace('DDD', 'd')
+    # remove consecutive lowercase/uppercase
+    for i in range(0, len(mutableList) - 1):
+        charOne = mutableList[i]
+        charTwo = mutableList[i+1]
+        if charOne.lower() == charTwo.lower() and charOne.isupper() != charTwo.isupper(): 
+            mutableList = mutableList[:i] + '!!' + mutableList[i+2:]
+    mutableList = mutableList.replace('!', '')
+    theCube.setSolution(mutableList)
+    

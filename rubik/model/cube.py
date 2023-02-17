@@ -21,6 +21,9 @@ class Cube:
     
     def getSolution(self):
         return self._solution
+    
+    def setSolution(self, newSolution):
+        self._solution = newSolution
         
     # directions parameter >= 0, [FfRrBbLlUu]
     # if recordRotation is 1, note it in the solutions
