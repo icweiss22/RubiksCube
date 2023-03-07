@@ -33,6 +33,6 @@ def solveBottomCross(theCube: Cube) -> str:
             theCube.rotate('U')
         theCube.rotate('LL')
     
-    return theCube.getSolution()    
+    return theCube.getSolution()
 
 

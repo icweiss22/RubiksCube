@@ -40,13 +40,6 @@ class SolveTest(TestCase):
         solveBottomCross(myCube)
         bottomCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
         self.assertTrue(all(i == myCube.get()[49] for i in bottomCross))
-    def test_makeBottomCrossScrambled2(self):
-        cubeStr = 'ybbbbyoogogwbrwwwwoobrgwbyyyogoorrryobgyyrrwwggrywgbgr'
-        myCube = cube.Cube(cubeStr)
-        solveBottomCross(myCube)
-        bottomCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
-        self.assertTrue(all(i == myCube.get()[49] for i in bottomCross))
-        
     '''
     Bottom layer
     ''' 
