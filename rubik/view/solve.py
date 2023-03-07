@@ -5,15 +5,14 @@ from rubik.controller.upFaceCross import solveUpCross
 from rubik.controller.upFaceSurface import solveUpSurface
 from rubik.controller.upperLayer import solveUpperLayer
 from rubik.model.cube import Cube
-import rubik.view.rotate as rotate
 
 def solve(parms):
     """Return rotates needed to solve input cube"""
     result = {}
     
     # validation
-    if rotate.cubeValidation(parms).get('status') != 'ok':
-        return rotate.cubeValidation(parms)
+    if Cube.cubeValidation(None,parms).get('status') != 'ok':
+        return Cube.cubeValidation(None,parms)
      
     encodedCube = parms.get('cube')
     theCube = Cube(encodedCube)
@@ -29,7 +28,7 @@ def solve(parms):
     
     result['solution'] = theCube.getSolution()
     result['status'] = 'ok'    
-    result['integrity'] = ''       #iteration 3
+    result['integrity'] = ''       #iteration 6
                      
     return result
 

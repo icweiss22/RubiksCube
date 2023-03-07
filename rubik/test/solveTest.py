@@ -31,7 +31,7 @@ class SolveTest(TestCase):
     '''
     Back cross
     '''
-    def test_makeDownCrossScrambled(self):
+    def test_makeBackCrossScrambled(self):
         cubeStr = 'ooowbrrgywobwrggygwgbwgryywrwybobgywyrroybbybgorbwgoro'
         result = solve({'cube': cubeStr})
         myCube = cube.Cube(cubeStr)
@@ -40,13 +40,30 @@ class SolveTest(TestCase):
         self.assertTrue(all(i == myCube.get()[49] for i in backCross))
         
     '''
-    Down layer
+    Bottom layer
     ''' 
-    def test_makeDownLayerScrambled2(self):
+    def test_makeBottomLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         result = solve({'cube': cubeStr})
         myCube = cube.Cube(cubeStr)
         myCube.rotate(result['solution'])
         backFace = myCube.get()[45:54]
         self.assertTrue(all(i == myCube.get()[49] for i in backFace))
+    '''
+    Middle layer
+    ''' 
+    def test_makeMiddleLayerScrambled(self):
+        cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
+        result = solve({'cube': cubeStr})
+        myCube = cube.Cube(cubeStr)
+        myCube.rotate(result['solution'])
+        frontMiddleLayer = myCube.get()[3:9]
+        rightMiddleLayer = myCube.get()[12:18]
+        backMiddleLayer = myCube.get()[21:27]
+        leftMiddleLayer = myCube.get()[30:36]
+        self.assertTrue(all(i == myCube.get()[4] for i in frontMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[13] for i in rightMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[22] for i in backMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[31] for i in leftMiddleLayer))
+        
     

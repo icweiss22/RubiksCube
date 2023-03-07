@@ -1,3 +1,5 @@
+import collections
+
 OFFSETS = {'f': 0, 'r': 9, 'b': 18, 'l': 27, 'u': 36, 'd': 45} # indices that the face starts at
 CONNECTED = {   'f': ((42, 43, 44), (9, 12, 15), (47, 46, 45), (35, 32, 29)),   'r': ((44, 41, 38), (18, 21, 24), (53, 50, 47), (8, 5, 2)),
                 'b': ((38, 37, 36), (27, 30, 33), (51, 52, 53), (17, 14, 11)),  'l': ((36, 39, 42), (0, 3, 6), (45, 48, 51), (26, 23, 20)),
@@ -24,6 +26,42 @@ class Cube:
     
     def setSolution(self, newSolution):
         self._solution = newSolution
+        
+            
+    def cubeValidation(self, params):
+        result = {}
+    
+        try:
+            cubeParam = params.get('cube', None)
+            
+            # cubeParam is empty    
+            if cubeParam is None:
+                result['status'] = 'error: cube param is required'
+                
+            # cubeParam is alphanumeric
+            elif not cubeParam.isalnum():
+                result['status'] = 'error: cube param must be alphanumeric'
+            
+            # cubeParam is 54 characters
+            elif len(cubeParam) != 54:
+                result['status'] = 'error: there must be exactly 54 characters in the cube param'
+                
+            # cubeParam must have exactly 6 unique colors
+            elif len(collections.Counter(cubeParam)) != 6:
+                result['status'] = 'error: there must be exactly 6 different colors'
+                
+            # cubeParam must have unique centers (5,14,23,32,41,50), but subtract 1 bc index starts at 0
+            elif len(set(cubeParam[i] for i in [4, 13, 22, 31, 40, 49])) != 6:
+                result['status'] = 'error: each face center must have a unique color'
+        
+            # valid
+            else:
+                result['status'] = 'ok'
+                
+            return result
+        except:
+            
+            result['status'] = 'error: unknown error. please ensure cube param is a 54-length string'
         
     # directions parameter >= 0, [FfRrBbLlUu]
     # if recordRotation is 1, note it in the solutions

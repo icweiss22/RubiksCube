@@ -1,4 +1,5 @@
 from rubik.model.cube import Cube
+from rubik.model.constants import *  # @UnusedWildImport
 
 TwoFront, TwoRight, TwoBack, TwoLeft = 'FF', 'RR', 'BB', 'LL'
 U = 'U'
@@ -15,41 +16,41 @@ def solveBottomCross(theCube: Cube) -> str:
         input:  an instance of the cube class
         output: the rotations required to transform the input cube into the down-face cross 
     '''  
-    bottom_cross = [theCube.get()[46], theCube.get()[48], theCube.get()[50], theCube.get()[52]]
-    if any(i != theCube.get()[49] for i in bottom_cross):
+    bottomCross = [theCube.get()[DTM], theCube.get()[DML], theCube.get()[DMR], theCube.get()[DBM]]
+    if any(tileInBottomCross != theCube.get()[DMM] for tileInBottomCross in bottomCross):
         theCube.makeCrossGeneric()
-        if theCube.get()[1] != theCube.get()[4]: # Front 
+        if theCube.get()[FTM] != theCube.get()[FMM]: # Front 
             while True:
                 theCube.rotate(U)
-                if theCube.get()[1] == theCube.get()[4]:
+                if theCube.get()[FTM] == theCube.get()[FMM]:
                     break
             theCube.rotate(TwoFront)
         else:
             theCube.rotate(TwoFront)
             
-        if theCube.get()[10] != theCube.get()[13]: # Right
+        if theCube.get()[RTM] != theCube.get()[RMM]: # Right
             while True:
                 theCube.rotate(U)
-                if theCube.get()[10] == theCube.get()[13]:
+                if theCube.get()[RTM] == theCube.get()[RMM]:
                     break
             theCube.rotate(TwoRight)
         else:
             theCube.rotate(TwoRight)
             
-        if theCube.get()[19] != theCube.get()[22]: # Back
+        if theCube.get()[BTM] != theCube.get()[BMM]: # Back
             while True:
                 theCube.rotate(U)
-                if theCube.get()[19] == theCube.get()[22]:
+                if theCube.get()[BTM] == theCube.get()[BMM]:
                     break
             theCube.rotate(TwoBack)
         else:
             theCube.rotate(TwoBack)
             
         
-        if theCube.get()[28] != theCube.get()[31]: # Left
+        if theCube.get()[LTM] != theCube.get()[LMM]: # Left
             while True:
                 theCube.rotate(U)
-                if theCube.get()[28] == theCube.get()[31]:
+                if theCube.get()[LTM] == theCube.get()[LMM]:
                     break
             theCube.rotate(TwoLeft)
         else:
