@@ -2,6 +2,9 @@ from unittest import TestCase
 from rubik.view.solve import solve
 # below are for testing controller methods
 import rubik.model.cube as cube
+from rubik.controller.bottomCross import solveBottomCross
+from rubik.controller.bottomLayer import solveBottomLayer
+from rubik.controller.middleLayer import solveMiddleLayer
 
 class SolveTest(TestCase):
     
@@ -29,34 +32,31 @@ class SolveTest(TestCase):
         myCube.rotate(result['solution'])
         self.assertEqual(myCube.getSolution(), '')
     '''
-    Back cross
+    Bottom cross
     '''
-    def test_makeBackCrossScrambled(self):
+    def test_makeBottomCrossScrambled(self):
         cubeStr = 'ooowbrrgywobwrggygwgbwgryywrwybobgywyrroybbybgorbwgoro'
-        result = solve({'cube': cubeStr})
         myCube = cube.Cube(cubeStr)
-        myCube.rotate(result['solution'])
-        backCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
-        self.assertTrue(all(i == myCube.get()[49] for i in backCross))
+        solveBottomCross(myCube)
+        bottomCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
+        self.assertTrue(all(i == myCube.get()[49] for i in bottomCross))
         
     '''
     Bottom layer
     ''' 
     def test_makeBottomLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
-        result = solve({'cube': cubeStr})
         myCube = cube.Cube(cubeStr)
-        myCube.rotate(result['solution'])
-        backFace = myCube.get()[45:54]
-        self.assertTrue(all(i == myCube.get()[49] for i in backFace))
+        solveBottomLayer(myCube)
+        bottomLayer = myCube.get()[45:54]
+        self.assertTrue(all(i == myCube.get()[49] for i in bottomLayer))
     '''
     Middle layer
     ''' 
     def test_makeMiddleLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
-        result = solve({'cube': cubeStr})
         myCube = cube.Cube(cubeStr)
-        myCube.rotate(result['solution'])
+        solveMiddleLayer(myCube)
         frontMiddleLayer = myCube.get()[3:9]
         rightMiddleLayer = myCube.get()[12:18]
         backMiddleLayer = myCube.get()[21:27]

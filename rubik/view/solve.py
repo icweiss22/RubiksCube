@@ -9,14 +9,15 @@ from rubik.model.constants import * # @UnusedWildImport
 
 def solve(parms):
     """Return rotates needed to solve input cube"""
-    result = {}
-    
-    # validation
-    if Cube.cubeValidation(None,parms).get('status') != 'ok':
-        return Cube.cubeValidation(None,parms)
+    result = {'solution': '', 'status': 'ok', 'integrity': ''}
      
     encodedCube = parms.get('cube')
     theCube = Cube(encodedCube)
+    
+    validationMessage = theCube.cubeValidation(parms)['status']
+    if validationMessage != 'ok':
+        result['status'] = validationMessage
+        return result
     
     frontFace = theCube.get()[0:9]
     rightFace = theCube.get()[9:18]
@@ -32,38 +33,35 @@ def solve(parms):
         all(i == theCube.get()[LMM] for i in leftFace) and 
         all(i == theCube.get()[UMM] for i in upFace) and 
         all(i == theCube.get()[DMM] for i in downFace)):
-        return 
-    
+        return result
     # middle layer solved
-    if (all(i == frontFace[4] for i in frontFace[3:]) and
+    elif (all(i == frontFace[4] for i in frontFace[3:]) and
         all(i == rightFace[4] for i in rightFace[3:]) and
         all(i == backFace[4] for i in backFace[3:]) and
         all(i == leftFace[4] for i in leftFace[3:])):
-        return
-    
-    downMiddle = downFace[4]
-    if (all(i == downMiddle for i in downFace)):
-        solveMiddleLayer(theCube)
-    elif (downFace[1] == downFace[3] == downFace[5] == downFace[7] == downMiddle):
-        solveBottomLayer(theCube)
-        solveMiddleLayer(theCube)
-    elif (upFace[1] == upFace[3] == upFace[5] == upFace[7] == downMiddle):
-        solveBottomCross(theCube)
-        solveBottomLayer(theCube)
-        solveMiddleLayer(theCube)
+        return result
     else:
-        theCube.makeCrossGeneric()
-        solveBottomCross(theCube)
-        solveBottomLayer(theCube)
-        solveMiddleLayer(theCube)
+        downMiddle = downFace[4]
+        if (all(i == downMiddle for i in downFace)):
+            solveMiddleLayer(theCube)
+        elif (downFace[1] == downFace[3] == downFace[5] == downFace[7] == downMiddle):
+            solveBottomLayer(theCube)
+            solveMiddleLayer(theCube)
+        elif (upFace[1] == upFace[3] == upFace[5] == upFace[7] == downMiddle):
+            solveBottomCross(theCube)
+            solveBottomLayer(theCube)
+            solveMiddleLayer(theCube)
+        else:
+            theCube.makeCrossGeneric()
+            solveBottomCross(theCube)
+            solveBottomLayer(theCube)
+            solveMiddleLayer(theCube)
+        
+        cleanSolution(theCube)
+        
+        result['solution'] = theCube.getSolution()
     
-    cleanSolution(theCube)
-    
-    result['solution'] = theCube.getSolution()
-    result['status'] = 'ok'    
-    result['integrity'] = ''       
-                     
-    return result
+        return result
 
 def cleanSolution(theCube: Cube):
     mutableList = theCube.getSolution()
