@@ -55,5 +55,3 @@ class CubeTest(unittest.TestCase):
     def test_rotateMultipleRotations(self):
         preRotateCube = cube.Cube('wbgobwoyrywygroggroroygrbbwgrbyobowywbbgyorwrggwrwobyy')
         self.assertEqual(preRotateCube.rotate('FrBlU'), 'yogrbogwbyoywryrwbggwbggwrrgobrowbbwryobygoyrogwrwbyyo')
-
-    

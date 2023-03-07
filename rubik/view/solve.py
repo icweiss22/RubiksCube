@@ -9,8 +9,7 @@ from rubik.model.constants import * # @UnusedWildImport
 
 def solve(parms):
     """Return rotates needed to solve input cube"""
-    result = {'solution': '', 'status': 'ok', 'integrity': ''}
-     
+    result = {}
     encodedCube = parms.get('cube')
     theCube = Cube(encodedCube)
     
@@ -18,6 +17,9 @@ def solve(parms):
     if validationMessage != 'ok':
         result['status'] = validationMessage
         return result
+    result['status'] = 'ok'
+    result['solution'] = ''
+    result['integrity'] = ''
     
     frontFace = theCube.get()[0:9]
     rightFace = theCube.get()[9:18]
@@ -58,7 +60,6 @@ def solve(parms):
             solveMiddleLayer(theCube)
         
         cleanSolution(theCube)
-        
         result['solution'] = theCube.getSolution()
     
         return result

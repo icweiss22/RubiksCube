@@ -5,9 +5,13 @@ def rotate(parms):
     result = {}
     
     # validation
-    encodedCube = Cube(parms.get('cube'))
+    cubeStr = parms.get('cube')
+    if not(cubeStr is None):
+        encodedCube = Cube(cubeStr)
+    else:
+        result['status'] = 'error: cube is required'
     
-    validationMessage = encodedCube.cubeValidation(parms)['status']
+    validationMessage = encodedCube.cubeValidation()
     if validationMessage != 'ok':
         result['status'] = validationMessage
         return result
