@@ -10,14 +10,20 @@ from rubik.model.constants import * # @UnusedWildImport
 def solve(parms):
     """Return rotates needed to solve input cube"""
     result = {}
-    encodedCube = parms.get('cube')
-    theCube = Cube(encodedCube)
+
+    # validation
+    cubeStr = parms.get('cube')
+    if not(cubeStr is None):
+        theCube = Cube(cubeStr)
+    else:
+        result['status'] = 'error: cube is required'
     
-    validationMessage = theCube.cubeValidation(parms)['status']
+    validationMessage = theCube.cubeValidation()
     if validationMessage != 'ok':
         result['status'] = validationMessage
         return result
-    result['status'] = 'ok'
+    
+    result['status'] = validationMessage
     result['solution'] = ''
     result['integrity'] = ''
     
