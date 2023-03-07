@@ -113,107 +113,103 @@ class Cube:
             
         
     def makeCrossGeneric(self):
-        cross = [self.get()[37], self.get()[39], self.get()[41], self.get()[43]]
-        if any(i != self.get()[49] for i in cross):
-            while True:
-                # Front
-                if self.get()[43] != self.get()[49]:
-                    offset = 0
-                    F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
-                # Right
-                elif self.get()[41] != self.get()[49]:
-                    offset = 9
-                    F, f, R, r, B, b, L, l, U, u, D, d = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'
-                # Back
-                elif self.get()[37] != self.get()[49]:
-                    offset = 18
-                    F, f, R, r, B, b, L, l, U, u, D, d = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'
-                # Left
-                elif self.get()[39] != self.get()[49]:
-                    offset = 27
-                    F, f, R, r, B, b, L, l, U, u, D, d = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd'
-                
-                # Front-Up-Middle
-                if self.get()[offset + 1] == self.get()[49]:
-                    self.rotate(f + U + l + u)
-                # Front-Left-Center
-                elif self.get()[offset + 3] == self.get()[49]:
-                    self.rotate(U + l + u)
-                # Front-Right-Center
-                elif self.get()[offset + 5] == self.get()[49]:
-                    self.rotate(u + R + U)
-                # Front-Center
-                elif self.get()[offset + 7] == self.get()[49]:
-                    self.rotate(f + u + R + U)
-                # Front-Right
-                elif self.get()[(offset + 12) % 36] == self.get()[49]:
-                    self.rotate(f)
-                # Front-Left
-                elif self.get()[(offset + 32) % 36] == self.get()[49]:
-                    self.rotate(F)
-                # Front-Down
-                elif offset == 0:
-                    if self.get()[46] == self.get()[49]:
-                        self.rotate(F + F)
-                    if self.get()[50] == self.get()[49]:
-                        self.rotate(d + F + F)
-                    if self.get()[52] == self.get()[49]:
-                        self.rotate(d + d + F + F)
-                    if self.get()[48] == self.get()[49]:
-                        self.rotate(D + F + F)
-                # Right-Down
-                elif offset == 9:
-                    if self.get()[46] == self.get()[49]:
-                        self.rotate(D + F + F)
-                    if self.get()[50] == self.get()[49]:
-                        self.rotate(F + F)
-                    if self.get()[52] == self.get()[49]:
-                        self.rotate(d + F + F)
-                    if self.get()[48] == self.get()[49]:
-                        self.rotate(d + d + F + F)
-                # Back-Down
-                elif offset == 18:
-                    if self.get()[46] == self.get()[49]:
-                        self.rotate(d + d + F + F)
-                    if self.get()[50] == self.get()[49]:
-                        self.rotate(D + F + F)
-                    if self.get()[52] == self.get()[49]:
-                        self.rotate(F + F)
-                    if self.get()[48] == self.get()[49]:
-                        self.rotate(d + F + F)
-                # Left-Down
-                elif offset == 27:
-                    if self.get()[46] == self.get()[49]:
-                        self.rotate(d + F + F)
-                    if self.get()[50] == self.get()[49]:
-                        self.rotate(d + d + F + F)
-                    if self.get()[52] == self.get()[49]:
-                        self.rotate(D + F + F)
-                    if self.get()[48] == self.get()[49]:
-                        self.rotate(F + F)
-                        
-                # Right
-                if self.get()[(offset + 12) % 36] == self.get()[49]:
-                    self.rotate(u + U + f + u)
-                elif self.get()[(offset + 14) % 36] == self.get()[49]:
-                    self.rotate(u + u + B + U)
-                elif self.get()[(offset + 16) % 36] == self.get()[49]:
-                    self.rotate(u + r + u + B + U)
-                # Back
-                elif self.get()[(offset + 21) % 36] == self.get()[49]:
-                    self.rotate(u + u + U + r + u)
-                elif self.get()[(offset + 23) % 36] == self.get()[49]:
-                    self.rotate(u + u + u + L + U)
-                elif self.get()[(offset + 25) % 36] == self.get()[49]:
-                    self.rotate(u + u + b + u + L + U)
-                # Left
-                elif self.get()[(offset + 30) % 36] == self.get()[49]:
-                    self.rotate(U + U + b + u)
-                elif self.get()[(offset + 32) % 36] == self.get()[49]:
-                    self.rotate(U + u + F + U)
-                elif self.get()[(offset + 34) % 36] == self.get()[49]:
-                    self.rotate(U + l + u + F + U)
-                        
-                cross = [self.get()[37], self.get()[39], self.get()[41], self.get()[43]]
-                if all(i == self.get()[49] for i in cross):
-                    break        
+        while not(self.get()[37] == self.get()[39] == self.get()[41] == self.get()[43] == self.get()[49]):
+            currentDMM = self.get()[49]   
+            # Front
+            if self.get()[43] != currentDMM:
+                offset = 0
+                F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
+            # Right
+            elif self.get()[41] != currentDMM:
+                offset = 9
+                F, f, R, r, B, b, L, l, U, u, D, d = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'
+            # Back
+            elif self.get()[37] != currentDMM:
+                offset = 18
+                F, f, R, r, B, b, L, l, U, u, D, d = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'
+            # Left
+            elif self.get()[39] != currentDMM:
+                offset = 27
+                F, f, R, r, B, b, L, l, U, u, D, d = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd'
+            
+            # Front-Up-Middle
+            if self.get()[offset + 1] == currentDMM:
+                self.rotate(f + U + l + u)
+            # Front-Left-Center
+            elif self.get()[offset + 3] == currentDMM:
+                self.rotate(U + l + u)
+            # Front-Right-Center
+            elif self.get()[offset + 5] == currentDMM:
+                self.rotate(u + R + U)
+            # Front-Center
+            elif self.get()[offset + 7] == currentDMM:
+                self.rotate(f + u + R + U)
+            # Front-Right
+            elif self.get()[(offset + 12) % 36] == currentDMM:
+                self.rotate(f)
+            # Front-Left
+            elif self.get()[(offset + 32) % 36] == currentDMM:
+                self.rotate(F)
+            # Front-Down
+            elif offset == 0:
+                if self.get()[46] == currentDMM:
+                    self.rotate(F + F)
+                if self.get()[50] == self.get()[49]:
+                    self.rotate(d + F + F)
+                if self.get()[52] == self.get()[49]:
+                    self.rotate(d + d + F + F)
+                if self.get()[48] == self.get()[49]:
+                    self.rotate(D + F + F)
+            # Right-Down
+            elif offset == 9:
+                if self.get()[46] == currentDMM:
+                    self.rotate(D + F + F)
+                if self.get()[50] == self.get()[49]:
+                    self.rotate(F + F)
+                if self.get()[52] == self.get()[49]:
+                    self.rotate(d + F + F)
+                if self.get()[48] == self.get()[49]:
+                    self.rotate(d + d + F + F)
+            # Back-Down
+            elif offset == 18:
+                if self.get()[46] == currentDMM:
+                    self.rotate(d + d + F + F)
+                if self.get()[50] == self.get()[49]:
+                    self.rotate(D + F + F)
+                if self.get()[52] == self.get()[49]:
+                    self.rotate(F + F)
+                if self.get()[48] == self.get()[49]:
+                    self.rotate(d + F + F)
+            # Left-Down
+            elif offset == 27:
+                if self.get()[46] == currentDMM:
+                    self.rotate(d + F + F)
+                if self.get()[50] == self.get()[49]:
+                    self.rotate(d + d + F + F)
+                if self.get()[52] == self.get()[49]:
+                    self.rotate(D + F + F)
+                if self.get()[48] == self.get()[49]:
+                    self.rotate(F + F)
+                 
+            currentDMM = self.get()[49]   
+            # Right
+            if self.get()[(offset + 12) % 36] == currentDMM:
+                self.rotate(u + U + f + u)
+            elif self.get()[(offset + 14) % 36] == currentDMM:
+                self.rotate(u + u + B + U)
+            elif self.get()[(offset + 16) % 36] == currentDMM:
+                self.rotate(u + r + u + B + U)
+            # Back
+            elif self.get()[(offset + 21) % 36] == currentDMM:
+                self.rotate(u + u + U + r + u)
+            elif self.get()[(offset + 23) % 36] == currentDMM:
+                self.rotate(u + u + u + L + U)
+            elif self.get()[(offset + 25) % 36] == currentDMM:
+                self.rotate(u + u + b + u + L + U)
+            # Left
+            elif self.get()[(offset + 30) % 36] == currentDMM:
+                self.rotate(U + U + b + u)
+            elif self.get()[(offset + 32) % 36] == currentDMM:
+                self.rotate(U + u + F + U)
+            elif self.get()[(offset + 34) % 36] == currentDMM:
+                self.rotate(U + l + u + F + U)    

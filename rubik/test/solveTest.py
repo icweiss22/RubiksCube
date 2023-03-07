@@ -40,6 +40,12 @@ class SolveTest(TestCase):
         solveBottomCross(myCube)
         bottomCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
         self.assertTrue(all(i == myCube.get()[49] for i in bottomCross))
+    def test_makeBottomCrossScrambled2(self):
+        cubeStr = 'ybbbbyoogogwbrwwwwoobrgwbyyyogoorrryobgyyrrwwggrywgbgr'
+        myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
+        bottomCross = [myCube.get()[46], myCube.get()[48], myCube.get()[50], myCube.get()[52]]  
+        self.assertTrue(all(i == myCube.get()[49] for i in bottomCross))
         
     '''
     Bottom layer
@@ -50,11 +56,30 @@ class SolveTest(TestCase):
         solveBottomLayer(myCube)
         bottomLayer = myCube.get()[45:54]
         self.assertTrue(all(i == myCube.get()[49] for i in bottomLayer))
+    def test_makeBottomLayerScrambled2(self):
+        cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
+        myCube = cube.Cube(cubeStr)
+        solveBottomLayer(myCube)
+        bottomLayer = myCube.get()[45:54]
+        self.assertTrue(all(i == myCube.get()[49] for i in bottomLayer))
     '''
     Middle layer
     ''' 
     def test_makeMiddleLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
+        myCube = cube.Cube(cubeStr)
+        solveMiddleLayer(myCube)
+        frontMiddleLayer = myCube.get()[3:9]
+        rightMiddleLayer = myCube.get()[12:18]
+        backMiddleLayer = myCube.get()[21:27]
+        leftMiddleLayer = myCube.get()[30:36]
+        self.assertTrue(all(i == myCube.get()[4] for i in frontMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[13] for i in rightMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[22] for i in backMiddleLayer))
+        self.assertTrue(all(i == myCube.get()[31] for i in leftMiddleLayer))
+        
+    def test_makeMiddleLayerScrambled2(self):
+        cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
         solveMiddleLayer(myCube)
         frontMiddleLayer = myCube.get()[3:9]

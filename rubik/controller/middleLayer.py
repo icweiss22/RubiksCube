@@ -11,7 +11,7 @@ def solveMiddleLayer(theCube: Cube) -> str:
         input:  an instance of the cube class with the bottom layer solved
         output: the rotations required to solve the middle layer  
     '''  
-    while any(color != theCube.get()[4] for color in [theCube.get()[3], theCube.get()[4], theCube.get()[5]]) or any(color != theCube.get()[13] for color in [theCube.get()[12], theCube.get()[13], theCube.get()[14]]) or any(color != theCube.get()[22] for color in [theCube.get()[21], theCube.get()[22], theCube.get()[23]]) or any(color != theCube.get()[31] for color in [theCube.get()[30], theCube.get()[31], theCube.get()[32]]):
+    while not(theCube.get()[3] == theCube.get()[4] == theCube.get()[5]) or not(theCube.get()[12] == theCube.get()[13] == theCube.get()[14]) or not(theCube.get()[21] == theCube.get()[22] == theCube.get()[23]) or not(theCube.get()[30] == theCube.get()[31] == theCube.get()[32]):
         if theCube.get()[1] != theCube.get()[40] and theCube.get()[43] != theCube.get()[40]:
             if theCube.get()[1] == theCube.get()[4]:
                 if theCube.get()[43] == theCube.get()[31]:

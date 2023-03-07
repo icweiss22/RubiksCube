@@ -15,22 +15,22 @@ def solveBottomLayer(theCube: Cube) -> str:
         '''
         Bottom corners -> Up
         '''
-        btmCorners = [theCube.get()[FBL], theCube.get()[FBR], theCube.get()[RBL], theCube.get()[RBR], theCube.get()[BBL], theCube.get()[BBR], theCube.get()[LBL], theCube.get()[LBR]]
-        if any(i == theCube.get()[DMM] for i in btmCorners):
+        cubeStr = theCube.get()
+        if any(i == cubeStr[DMM] for i in [cubeStr[FBL], cubeStr[FBR], cubeStr[RBL], cubeStr[RBR], cubeStr[BBL], cubeStr[BBR], cubeStr[LBL], cubeStr[LBR]]):
             # Front
-            if theCube.get()[FBL] == theCube.get()[DMM] or theCube.get()[FBR] == theCube.get()[DMM]:
+            if cubeStr[FBL] == cubeStr[DMM] or cubeStr[FBR] == cubeStr[DMM]:
                 offset = 0
                 F, f, R, r, B, b, L, l, U, u = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u'
             # Right
-            elif theCube.get()[RBL] == theCube.get()[DMM] or theCube.get()[RBR] == theCube.get()[DMM]:
+            elif cubeStr[RBL] == cubeStr[DMM] or cubeStr[RBR] == cubeStr[DMM]:
                 offset = 9
                 F, f, R, r, B, b, L, l, U, u = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u'
             # Back
-            elif theCube.get()[BBL] == theCube.get()[DMM] or theCube.get()[BBR] == theCube.get()[DMM]:
+            elif cubeStr[BBL] == cubeStr[DMM] or cubeStr[BBR] == cubeStr[DMM]:
                 offset = 18
                 F, f, R, r, B, b, L, l, U, u = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u'
             # Left
-            elif theCube.get()[LBL] == theCube.get()[DMM] or theCube.get()[LBR] == theCube.get()[DMM]:
+            elif cubeStr[LBL] == cubeStr[DMM] or cubeStr[LBR] == cubeStr[DMM]:
                 offset = 27
                 F, f, R, r, B, b, L, l, U, u = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u'
             
