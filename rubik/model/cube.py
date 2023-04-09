@@ -35,7 +35,7 @@ class Cube:
                 returnMessage = 'error: cube param is required'
                 
             cubeParam = self.get()
-
+            
             # cubeParam is alphanumeric
             if not cubeParam.isalnum():
                 returnMessage = 'error: cube param must be alphanumeric'
@@ -47,6 +47,9 @@ class Cube:
             # cubeParam must have exactly 6 unique colors
             elif len(set(cubeParam)) != 6:
                 returnMessage = 'error: there must be exactly 6 different colors'
+                
+            elif not(all(cubeParam.count(char) == 9 for char in set(cubeParam))):
+                returnMessage = 'error: there must be 9 occurences of each color'
                 
             # cubeParam must have unique centers (5,14,23,32,41,50), but subtract 1 bc index starts at 0
             elif len(set(cubeParam[i] for i in [4, 13, 22, 31, 40, 49])) != 6:

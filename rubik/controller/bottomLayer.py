@@ -11,27 +11,28 @@ def solveBottomLayer(theCube: Cube) -> str:
         output: the rotations required to solve the bottom layer  
     '''    
     # Loop while bottom layer is not yet solved
-    while any(i != theCube.get()[DMM] for i in [theCube.get()[DTL], theCube.get()[DTM], theCube.get()[DTR], theCube.get()[DML], theCube.get()[DMR], theCube.get()[DBL], theCube.get()[DBM], theCube.get()[DBR]]):
+    while any(block != theCube.get()[DMM] for block in [theCube.get()[DTL], theCube.get()[DTM], theCube.get()[DTR], theCube.get()[DML], theCube.get()[DMR], theCube.get()[DBL], theCube.get()[DBM], theCube.get()[DBR]]):
         '''
         Bottom corners -> Up
         '''
         cubeStr = theCube.get()
-        if any(i == cubeStr[DMM] for i in [cubeStr[FBL], cubeStr[FBR], cubeStr[RBL], cubeStr[RBR], cubeStr[BBL], cubeStr[BBR], cubeStr[LBL], cubeStr[LBR]]):
+        FrontOffset, RightOffset, BackOffset, LeftOffset = 0, 9, 18, 27
+        if any(block == cubeStr[DMM] for block in [cubeStr[FBL], cubeStr[FBR], cubeStr[RBL], cubeStr[RBR], cubeStr[BBL], cubeStr[BBR], cubeStr[LBL], cubeStr[LBR]]):
             # Front
             if cubeStr[FBL] == cubeStr[DMM] or cubeStr[FBR] == cubeStr[DMM]:
-                offset = 0
+                offset = FrontOffset
                 F, f, R, r, B, b, L, l, U, u = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u'
             # Right
             elif cubeStr[RBL] == cubeStr[DMM] or cubeStr[RBR] == cubeStr[DMM]:
-                offset = 9
+                offset = RightOffset
                 F, f, R, r, B, b, L, l, U, u = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u'
             # Back
             elif cubeStr[BBL] == cubeStr[DMM] or cubeStr[BBR] == cubeStr[DMM]:
-                offset = 18
+                offset = BackOffset
                 F, f, R, r, B, b, L, l, U, u = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u'
             # Left
             elif cubeStr[LBL] == cubeStr[DMM] or cubeStr[LBR] == cubeStr[DMM]:
-                offset = 27
+                offset = LeftOffset
                 F, f, R, r, B, b, L, l, U, u = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u'
             
             if theCube.get()[offset + 6] == theCube.get()[DMM]:
@@ -43,7 +44,7 @@ def solveBottomLayer(theCube: Cube) -> str:
         Front corners -> Top
         '''
         upCorners = [theCube.get()[UTL], theCube.get()[UTR], theCube.get()[UBL], theCube.get()[UBR]]
-        if any(i == theCube.get()[DMM] for i in upCorners):
+        if any(block == theCube.get()[DMM] for block in upCorners):
             if theCube.get()[UBL] == theCube.get()[DMM]:
                 theCube.rotate('luuL')
             if theCube.get()[UBR] == theCube.get()[DMM]:
@@ -57,21 +58,22 @@ def solveBottomLayer(theCube: Cube) -> str:
         Top corners -> Down
         '''
         topCorners = [theCube.get()[FTL], theCube.get()[FTR], theCube.get()[RTL], theCube.get()[RTR], theCube.get()[BTL], theCube.get()[BTR], theCube.get()[LTL], theCube.get()[LTR]]
-        if any(i == theCube.get()[DMM] for i in topCorners):
+        if any(block == theCube.get()[DMM] for block in topCorners):
+            # Front
             if theCube.get()[FTL] == theCube.get()[DMM] or theCube.get()[FTR] == theCube.get()[DMM]:
-                offset = 0
+                offset = FrontOffset
                 F, f, R, r, B, b, L, l, U, u = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u'
             # Right
             elif theCube.get()[RTL] == theCube.get()[DMM] or theCube.get()[RTR] == theCube.get()[DMM]:
-                offset = 9
+                offset = RightOffset
                 F, f, R, r, B, b, L, l, U, u = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u'
             # Back
             elif theCube.get()[BTL] == theCube.get()[DMM] or theCube.get()[BTR] == theCube.get()[DMM]:
-                offset = 18
+                offset = BackOffset
                 F, f, R, r, B, b, L, l, U, u = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u'
-            # Orientation
+            # Left
             elif theCube.get()[LTL] == theCube.get()[DMM] or theCube.get()[LTR] == theCube.get()[DMM]:
-                offset = 27
+                offset = LeftOffset
                 F, f, R, r, B, b, L, l, U, u = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u'
                     
             if theCube.get()[offset + 2] == theCube.get()[DMM]:
@@ -95,5 +97,5 @@ def solveBottomLayer(theCube: Cube) -> str:
                     theCube.rotate(U + L + U + l)
             
         btmCross = [theCube.get()[DTM], theCube.get()[DMR], theCube.get()[DBM], theCube.get()[DML]]
-        if not all(i == theCube.get()[DMM] for i in btmCross):
+        if not all(block == theCube.get()[DMM] for block in btmCross):
             solveBottomCross(theCube)

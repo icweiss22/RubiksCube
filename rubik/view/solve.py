@@ -27,7 +27,7 @@ def solve(parms):
     result['solution'] = ''
     result['integrity'] = ''
     
-    frontFace = theCube.get()[0:9]
+    frontFace = theCube.get()[0:9] # these are indices on the cube matrix
     rightFace = theCube.get()[9:18]
     backFace = theCube.get()[18:27]
     leftFace = theCube.get()[27:36]
@@ -35,22 +35,22 @@ def solve(parms):
     downFace = theCube.get()[45:54]
     
     # already solved
-    if (all(i == theCube.get()[FMM] for i in frontFace) and 
-        all(i == theCube.get()[RMM] for i in rightFace) and 
-        all(i == theCube.get()[BMM] for i in backFace) and
-        all(i == theCube.get()[LMM] for i in leftFace) and 
-        all(i == theCube.get()[UMM] for i in upFace) and 
-        all(i == theCube.get()[DMM] for i in downFace)):
+    if (all(block == theCube.get()[FMM] for block in frontFace) and 
+        all(block == theCube.get()[RMM] for block in rightFace) and 
+        all(block == theCube.get()[BMM] for block in backFace) and
+        all(block == theCube.get()[LMM] for block in leftFace) and 
+        all(block == theCube.get()[UMM] for block in upFace) and 
+        all(block == theCube.get()[DMM] for block in downFace)):
         return result
     # middle layer solved
-    elif (all(i == frontFace[4] for i in frontFace[3:]) and
-        all(i == rightFace[4] for i in rightFace[3:]) and
-        all(i == backFace[4] for i in backFace[3:]) and
-        all(i == leftFace[4] for i in leftFace[3:])):
+    elif (all(block == frontFace[4] for block in frontFace[3:]) and
+        all(block == rightFace[4] for block in rightFace[3:]) and
+        all(block == backFace[4] for block in backFace[3:]) and
+        all(block == leftFace[4] for block in leftFace[3:])):
         return result
     else:
         downMiddle = downFace[4]
-        if (all(i == downMiddle for i in downFace)):
+        if (all(block == downMiddle for block in downFace)):
             solveMiddleLayer(theCube)
         elif (downFace[1] == downFace[3] == downFace[5] == downFace[7] == downMiddle):
             solveBottomLayer(theCube)
