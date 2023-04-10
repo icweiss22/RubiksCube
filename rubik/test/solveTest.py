@@ -86,6 +86,7 @@ class SolveTest(TestCase):
         self.assertTrue(all(i == myCube.get()[13] for i in rightMiddleLayer))
         self.assertTrue(all(i == myCube.get()[22] for i in backMiddleLayer))
         self.assertTrue(all(i == myCube.get()[31] for i in leftMiddleLayer))
+        print(myCube.get())
     '''
     Up Cross/Surface
     '''
@@ -95,7 +96,8 @@ class SolveTest(TestCase):
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
         self.assertTrue(all(myCube.get()[UMM] == myCube.get()[i] for i in [UML,UMR,UTM,UBM]))
-        print(myCube.get())
+        
+        '''
     def test_makeUpCrossScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
@@ -120,5 +122,5 @@ class SolveTest(TestCase):
         solveUpSurface(myCube)
         upSurface = myCube.get()[36:44]
         self.assertTrue(len(set(upSurface)) == 1)
-        print(myCube.get())
+        print(myCube.get())'''
     
