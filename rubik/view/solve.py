@@ -48,23 +48,38 @@ def solve(parms):
         all(block == rightFace[4] for block in rightFace[3:]) and
         all(block == backFace[4] for block in backFace[3:]) and
         all(block == leftFace[4] for block in leftFace[3:])):
+        solveUpCross(theCube)
+        solveUpSurface(theCube)
+        solveUpperLayer(theCube)
         return result
     else:
         downMiddle = downFace[4]
         if (all(block == downMiddle for block in downFace)):
             solveMiddleLayer(theCube)
+            solveUpCross(theCube)
+            solveUpSurface(theCube)
+            solveUpperLayer(theCube)
         elif (downFace[1] == downFace[3] == downFace[5] == downFace[7] == downMiddle):
             solveBottomLayer(theCube)
             solveMiddleLayer(theCube)
+            solveUpCross(theCube)
+            solveUpSurface(theCube)
+            solveUpperLayer(theCube)
         elif (upFace[1] == upFace[3] == upFace[5] == upFace[7] == downMiddle):
             solveBottomCross(theCube)
             solveBottomLayer(theCube)
             solveMiddleLayer(theCube)
+            solveUpCross(theCube)
+            solveUpSurface(theCube)
+            solveUpperLayer(theCube)
         else:
             theCube.makeCrossGeneric()
             solveBottomCross(theCube)
             solveBottomLayer(theCube)
             solveMiddleLayer(theCube)
+            solveUpCross(theCube)
+            solveUpSurface(theCube)
+            solveUpperLayer(theCube)
         
         cleanSolution(theCube)
         result['solution'] = theCube.getSolution()
