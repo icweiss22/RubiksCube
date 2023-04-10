@@ -14,7 +14,7 @@ def solveBottomCross(theCube: Cube):
         output: the rotations required to transform the input cube into the down-face cross 
     '''  
     cubeStr = theCube.get()
-    if not(cubeStr[DTM] == cubeStr[DML] == cubeStr[DMR] == cubeStr[DBM]):
+    if not(cubeStr[DTM] == cubeStr[DML] == cubeStr[DMR] == cubeStr[DBM] == cubeStr[DMM]):
         theCube.makeCrossGeneric()
         
         while theCube.get()[FTM] != theCube.get()[FMM]:

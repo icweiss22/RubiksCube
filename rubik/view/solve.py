@@ -89,6 +89,7 @@ def solve(parms):
         sha256Hash.update(itemToTokenize.encode())
         fullToken = sha256Hash.hexdigest()
         result['integrity'] = fullToken
+        result['newCube'] = theCube.get()
         
         return result
 

@@ -2,6 +2,7 @@ OFFSETS = {'f': 0, 'r': 9, 'b': 18, 'l': 27, 'u': 36, 'd': 45} # indices that th
 CONNECTED = {   'f': ((42, 43, 44), (9, 12, 15), (47, 46, 45), (35, 32, 29)),   'r': ((44, 41, 38), (18, 21, 24), (53, 50, 47), (8, 5, 2)),
                 'b': ((38, 37, 36), (27, 30, 33), (51, 52, 53), (17, 14, 11)),  'l': ((36, 39, 42), (0, 3, 6), (45, 48, 51), (26, 23, 20)),
                 'u': ((20, 19, 18), (11, 10, 9), (2, 1, 0), (29, 28, 27)),      'd': ((6, 7, 8), (15, 16, 17), (24, 25, 26), (33, 34, 35))}
+from rubik.model.constants import * # @UnusedWildImport
 
 class Cube:
     '''
@@ -113,103 +114,74 @@ class Cube:
             
         
     def makeCrossGeneric(self):
-        while not(self.get()[37] == self.get()[39] == self.get()[41] == self.get()[43] == self.get()[49]):
-            currentDMM = self.get()[49]   
-            # Front
-            if self.get()[43] != currentDMM:
-                offset = 0
-                F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
-            # Right
-            elif self.get()[41] != currentDMM:
-                offset = 9
-                F, f, R, r, B, b, L, l, U, u, D, d = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'
-            # Back
-            elif self.get()[37] != currentDMM:
-                offset = 18
-                F, f, R, r, B, b, L, l, U, u, D, d = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'
-            # Left
-            elif self.get()[39] != currentDMM:
-                offset = 27
-                F, f, R, r, B, b, L, l, U, u, D, d = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd'
+        if not(self.get()[DTM] == self.get()[DML] == self.get()[DMR] == self.get()[DBM] == self.get()[DMM]):     # we only do generic cross to get a bottom cross in the start  
             
-            # Front-Up-Middle
-            if self.get()[offset + 1] == currentDMM:
-                self.rotate(f + U + l + u)
-            # Front-Left-Center
-            elif self.get()[offset + 3] == currentDMM:
-                self.rotate(U + l + u)
-            # Front-Right-Center
-            elif self.get()[offset + 5] == currentDMM:
-                self.rotate(u + R + U)
-            # Front-Center
-            elif self.get()[offset + 7] == currentDMM:
-                self.rotate(f + u + R + U)
-            # Front-Right
-            elif self.get()[(offset + 12) % 36] == currentDMM:
-                self.rotate(f)
-            # Front-Left
-            elif self.get()[(offset + 32) % 36] == currentDMM:
-                self.rotate(F)
-            # Front-Down
-            elif offset == 0:
-                if self.get()[46] == currentDMM:
-                    self.rotate(F + F)
-                if self.get()[50] == self.get()[49]:
-                    self.rotate(d + F + F)
-                if self.get()[52] == self.get()[49]:
-                    self.rotate(d + d + F + F)
-                if self.get()[48] == self.get()[49]:
-                    self.rotate(D + F + F)
-            # Right-Down
-            elif offset == 9:
-                if self.get()[46] == currentDMM:
-                    self.rotate(D + F + F)
-                if self.get()[50] == self.get()[49]:
-                    self.rotate(F + F)
-                if self.get()[52] == self.get()[49]:
-                    self.rotate(d + F + F)
-                if self.get()[48] == self.get()[49]:
-                    self.rotate(d + d + F + F)
-            # Back-Down
-            elif offset == 18:
-                if self.get()[46] == currentDMM:
-                    self.rotate(d + d + F + F)
-                if self.get()[50] == self.get()[49]:
-                    self.rotate(D + F + F)
-                if self.get()[52] == self.get()[49]:
-                    self.rotate(F + F)
-                if self.get()[48] == self.get()[49]:
-                    self.rotate(d + F + F)
-            # Left-Down
-            elif offset == 27:
-                if self.get()[46] == currentDMM:
-                    self.rotate(d + F + F)
-                if self.get()[50] == self.get()[49]:
-                    self.rotate(d + d + F + F)
-                if self.get()[52] == self.get()[49]:
-                    self.rotate(D + F + F)
-                if self.get()[48] == self.get()[49]:
-                    self.rotate(F + F)
-                 
-            currentDMM = self.get()[49]   
-            # Right
-            if self.get()[(offset + 12) % 36] == currentDMM:
-                self.rotate(u + U + f + u)
-            elif self.get()[(offset + 14) % 36] == currentDMM:
-                self.rotate(u + u + B + U)
-            elif self.get()[(offset + 16) % 36] == currentDMM:
-                self.rotate(u + r + u + B + U)
-            # Back
-            elif self.get()[(offset + 21) % 36] == currentDMM:
-                self.rotate(u + u + U + r + u)
-            elif self.get()[(offset + 23) % 36] == currentDMM:
-                self.rotate(u + u + u + L + U)
-            elif self.get()[(offset + 25) % 36] == currentDMM:
-                self.rotate(u + u + b + u + L + U)
-            # Left
-            elif self.get()[(offset + 30) % 36] == currentDMM:
-                self.rotate(U + U + b + u)
-            elif self.get()[(offset + 32) % 36] == currentDMM:
-                self.rotate(U + u + F + U)
-            elif self.get()[(offset + 34) % 36] == currentDMM:
-                self.rotate(U + l + u + F + U)    
+            while any(self.get()[DMM] != self.get()[block] for block in [UTM,UML,UMR,UBM]):
+                currentDMM = self.get()[DMM]
+                
+                # Front
+                while self.get()[UBM] != currentDMM:
+                    F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
+                    if any(currentDMM == self.get()[i] for i in [12,32,46]):
+                        while self.get()[UBM] != currentDMM:
+                            self.rotate(F)
+                    elif any(currentDMM == self.get()[i] for i in [1,3,5,7]):
+                        if currentDMM == self.get()[3]:
+                            self.rotate(U + l)
+                        else:
+                            while currentDMM != self.get()[5]:
+                                self.rotate(F)
+                            self.rotate(u + R)
+                    else:
+                        break
+                        
+                # Right
+                while self.get()[UMR] != currentDMM:
+                    offset = 9
+                    F, f, R, r, B, b, L, l, U, u, D, d = 'R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'
+                    if any(currentDMM == self.get()[i] for i in [5,21,50]):
+                        while self.get()[UMR] != currentDMM:
+                            self.rotate(F)
+                    elif any(currentDMM == self.get()[i] for i in [10,12,14,16]):
+                        if currentDMM == self.get()[12]:
+                            self.rotate(U + l)
+                        else:
+                            while currentDMM != self.get()[14]:
+                                self.rotate(F)
+                            self.rotate(u + R)
+                    else:
+                        break
+                
+                # Back
+                while self.get()[UTM] != currentDMM:
+                    F, f, R, r, B, b, L, l, U, u, D, d = 'B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'
+                    if any(currentDMM == self.get()[i] for i in [14,30,52]):
+                        while self.get()[UTM] != currentDMM:
+                            self.rotate(F)
+                    elif any(currentDMM == self.get()[i] for i in [19,21,23,25]):
+                        if currentDMM == self.get()[21]:
+                            self.rotate(U + l)
+                        else:
+                            while currentDMM != self.get()[23]:
+                                self.rotate(F)
+                            self.rotate(u + R)
+                    else:
+                        break
+                        
+                # Left
+                while self.get()[UML] != currentDMM:
+                    F, f, R, r, B, b, L, l, U, u, D, d = 'L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd'
+                    if any(currentDMM == self.get()[i] for i in [3,23,48]):
+                        while self.get()[UML] != currentDMM:
+                            self.rotate(F)
+                    elif any(currentDMM == self.get()[i] for i in [28,30,32,34]):
+                        if currentDMM == self.get()[30]:
+                            self.rotate(U + l)
+                        else:
+                            while currentDMM != self.get()[32]:
+                                self.rotate(F)
+                            self.rotate(u + R)
+                    else:
+                        break
+                    
+                

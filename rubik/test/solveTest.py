@@ -63,8 +63,8 @@ class SolveTest(TestCase):
     ''' 
     def test_makeMiddleLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
-        myCube = cube.Cube(cubeStr)
-        solveMiddleLayer(myCube)
+        result = solve({'cube': cubeStr})
+        myCube = cube.Cube(result['newCube'])
         frontMiddleLayer = myCube.get()[3:9]
         rightMiddleLayer = myCube.get()[12:18]
         backMiddleLayer = myCube.get()[21:27]
@@ -73,11 +73,11 @@ class SolveTest(TestCase):
         self.assertTrue(all(i == myCube.get()[13] for i in rightMiddleLayer))
         self.assertTrue(all(i == myCube.get()[22] for i in backMiddleLayer))
         self.assertTrue(all(i == myCube.get()[31] for i in leftMiddleLayer))
-        
+    
     def test_makeMiddleLayerScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
-        myCube = cube.Cube(cubeStr)
-        solveMiddleLayer(myCube)
+        result = solve({'cube': cubeStr})
+        myCube = cube.Cube(result['newCube'])
         frontMiddleLayer = myCube.get()[3:9]
         rightMiddleLayer = myCube.get()[12:18]
         backMiddleLayer = myCube.get()[21:27]
@@ -92,6 +92,7 @@ class SolveTest(TestCase):
     def test_makeUpCrossScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         myCube = cube.Cube(cubeStr)
+        solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
         self.assertTrue(all(myCube.get()[UMM] == myCube.get()[i] for i in [UML,UMR,UTM,UBM]))
@@ -99,12 +100,14 @@ class SolveTest(TestCase):
     def test_makeUpCrossScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
+        solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
         self.assertTrue(all(myCube.get()[UMM] == myCube.get()[i] for i in [UML,UMR,UTM,UBM]))
     def test_makeUpSurfaceScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         myCube = cube.Cube(cubeStr)
+        solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
         solveUpSurface(myCube)
@@ -113,6 +116,7 @@ class SolveTest(TestCase):
     def test_makeUpSurfaceScrambled2(self):
         cubeStr = 'ygbbbbbbbybgrrrrrryogggggggorrooooooyyryyybyowwwwwwwww'
         myCube = cube.Cube(cubeStr)
+        solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
         solveUpSurface(myCube)
