@@ -97,7 +97,6 @@ class SolveTest(TestCase):
         solveUpCross(myCube)
         self.assertTrue(all(myCube.get()[UMM] == myCube.get()[i] for i in [UML,UMR,UTM,UBM]))
         
-        '''
     def test_makeUpCrossScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
@@ -122,5 +121,5 @@ class SolveTest(TestCase):
         solveUpSurface(myCube)
         upSurface = myCube.get()[36:44]
         self.assertTrue(len(set(upSurface)) == 1)
-        print(myCube.get())'''
+        print(myCube.get())
     
