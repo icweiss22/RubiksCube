@@ -1,7 +1,7 @@
 import rubik.model.constants
 from rubik.model.cube import Cube
 
-def solveUpSurface(theCube: Cube) -> str:
+def solveUpSurface(theCube: Cube):
     '''
         This is the top-level function  for rotating
         a cube so that the up face is solved.

@@ -1,7 +1,7 @@
 import rubik.model.constants
 from rubik.model.cube import Cube
 
-def solveUpperLayer(theCube: Cube) -> str:
+def solveUpperLayer(theCube: Cube):
     '''
         This is the top-level function  for rotating
         a cube so that the entire upper layer is solved.

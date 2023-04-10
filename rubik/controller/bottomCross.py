@@ -5,7 +5,7 @@ Created on Feb 16, 2023
 
 @author: isaacweiss
 '''
-def solveBottomCross(theCube: Cube) -> str:
+def solveBottomCross(theCube: Cube):
     '''
         This is the top-level function  for rotating
         a cube into the down-face cross configuration.

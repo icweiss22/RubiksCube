@@ -3,7 +3,7 @@ from rubik.model.cube import Cube
 from rubik.controller.bottomLayer import solveBottomLayer
 
 F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
-def solveMiddleLayer(theCube: Cube) -> str:
+def solveMiddleLayer(theCube: Cube):
     '''
         This is the top-level function  for rotating
         a cube so that the middle layer is solved.

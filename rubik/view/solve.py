@@ -6,6 +6,7 @@ from rubik.controller.upFaceSurface import solveUpSurface
 from rubik.controller.upperLayer import solveUpperLayer
 from rubik.model.cube import Cube
 from rubik.model.constants import * # @UnusedWildImport
+import hashlib
 
 def solve(parms):
     """Return rotates needed to solve input cube"""
@@ -68,6 +69,12 @@ def solve(parms):
         cleanSolution(theCube)
         result['solution'] = theCube.getSolution()
     
+        itemToTokenize = theCube.getSolution() + cubeStr + 'icw0001'
+        sha256Hash = hashlib.sha256()
+        sha256Hash.update(itemToTokenize.encode())
+        fullToken = sha256Hash.hexdigest()
+        result['integrity'] = fullToken
+        
         return result
 
 def cleanSolution(theCube: Cube):
