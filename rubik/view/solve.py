@@ -28,70 +28,29 @@ def solve(parms):
     result['solution'] = ''
     result['integrity'] = ''
     
-    frontFace = theCube.get()[0:9] # these are indices on the cube matrix
-    rightFace = theCube.get()[9:18]
-    backFace = theCube.get()[18:27]
-    leftFace = theCube.get()[27:36]
-    upFace = theCube.get()[36:45]
-    downFace = theCube.get()[45:54]
+    solveBottomCross(theCube)
     
-    # already solved
-    if (all(block == theCube.get()[FMM] for block in frontFace) and 
-        all(block == theCube.get()[RMM] for block in rightFace) and 
-        all(block == theCube.get()[BMM] for block in backFace) and
-        all(block == theCube.get()[LMM] for block in leftFace) and 
-        all(block == theCube.get()[UMM] for block in upFace) and 
-        all(block == theCube.get()[DMM] for block in downFace)):
-        return result
-    # middle layer solved
-    elif (all(block == frontFace[4] for block in frontFace[3:]) and
-        all(block == rightFace[4] for block in rightFace[3:]) and
-        all(block == backFace[4] for block in backFace[3:]) and
-        all(block == leftFace[4] for block in leftFace[3:])):
-        solveUpCross(theCube)
-        solveUpSurface(theCube)
-        solveUpperLayer(theCube)
-        return result
-    else:
-        downMiddle = downFace[4]
-        if (all(block == downMiddle for block in downFace)):
-            solveMiddleLayer(theCube)
-            solveUpCross(theCube)
-            solveUpSurface(theCube)
-            solveUpperLayer(theCube)
-        elif (downFace[1] == downFace[3] == downFace[5] == downFace[7] == downMiddle):
-            solveBottomLayer(theCube)
-            solveMiddleLayer(theCube)
-            solveUpCross(theCube)
-            solveUpSurface(theCube)
-            solveUpperLayer(theCube)
-        elif (upFace[1] == upFace[3] == upFace[5] == upFace[7] == downMiddle):
-            solveBottomCross(theCube)
-            solveBottomLayer(theCube)
-            solveMiddleLayer(theCube)
-            solveUpCross(theCube)
-            solveUpSurface(theCube)
-            solveUpperLayer(theCube)
-        else:
-            theCube.makeCrossGeneric()
-            solveBottomCross(theCube)
-            solveBottomLayer(theCube)
-            solveMiddleLayer(theCube)
-            solveUpCross(theCube)
-            solveUpSurface(theCube)
-            solveUpperLayer(theCube)
-        
-        cleanSolution(theCube)
-        result['solution'] = theCube.getSolution()
+    solveBottomLayer(theCube)
     
-        itemToTokenize = theCube.getSolution() + cubeStr + 'icw0001'
-        sha256Hash = hashlib.sha256()
-        sha256Hash.update(itemToTokenize.encode())
-        fullToken = sha256Hash.hexdigest()
-        result['integrity'] = fullToken
-        result['newCube'] = theCube.get()
+    solveMiddleLayer(theCube)
+    
+    solveUpCross(theCube)
+    
+    solveUpSurface(theCube)
+    
+    solveUpperLayer(theCube)
         
-        return result
+    cleanSolution(theCube)
+    result['solution'] = theCube.getSolution()
+
+    itemToTokenize = theCube.getSolution() + cubeStr + 'icw0001'
+    sha256Hash = hashlib.sha256()
+    sha256Hash.update(itemToTokenize.encode())
+    fullToken = sha256Hash.hexdigest()
+    result['integrity'] = fullToken
+    result['newCube'] = theCube.get()
+    
+    return result
 
 def cleanSolution(theCube: Cube):
     mutableList = theCube.getSolution()

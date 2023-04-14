@@ -49,12 +49,14 @@ class SolveTest(TestCase):
     def test_makeBottomLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         bottomLayer = myCube.get()[45:54]
         self.assertTrue(all(i == myCube.get()[49] for i in bottomLayer))
     def test_makeBottomLayerScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         bottomLayer = myCube.get()[45:54]
         self.assertTrue(all(i == myCube.get()[49] for i in bottomLayer))
