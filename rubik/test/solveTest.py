@@ -22,9 +22,12 @@ class SolveTest(TestCase):
         self.assertIn('integrity', result)
         self.assertEqual('FRBLUD', result.get('solution'))
     '''
-    
+    def test_missingCube(self):
+        parms = {}
+        result = solve(parms)
+        self.assertNotEqual('ok', result.get('status'))
     def test_cubeIsValidated(self):
-        parms = {'cube': 'xxx'}
+        parms = {}
         result = solve(parms)
         self.assertNotEqual('ok', result.get('status'))
         
@@ -65,21 +68,25 @@ class SolveTest(TestCase):
     ''' 
     def test_makeMiddleLayerScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
-        result = solve({'cube': cubeStr})
-        myCube = cube.Cube(result['newCube'])
-        frontMiddleLayer = myCube.get()[3:9]
-        rightMiddleLayer = myCube.get()[12:18]
-        backMiddleLayer = myCube.get()[21:27]
-        leftMiddleLayer = myCube.get()[30:36]
-        self.assertTrue(all(i == myCube.get()[4] for i in frontMiddleLayer))
-        self.assertTrue(all(i == myCube.get()[13] for i in rightMiddleLayer))
-        self.assertTrue(all(i == myCube.get()[22] for i in backMiddleLayer))
-        self.assertTrue(all(i == myCube.get()[31] for i in leftMiddleLayer))
+        theCube = cube.Cube(cubeStr)
+        solveBottomCross(theCube)
+        solveBottomLayer(theCube)
+        solveMiddleLayer(theCube)
+        frontMiddleLayer = theCube.get()[3:9]
+        rightMiddleLayer = theCube.get()[12:18]
+        backMiddleLayer = theCube.get()[21:27]
+        leftMiddleLayer = theCube.get()[30:36]
+        self.assertTrue(all(i == theCube.get()[4] for i in frontMiddleLayer))
+        self.assertTrue(all(i == theCube.get()[13] for i in rightMiddleLayer))
+        self.assertTrue(all(i == theCube.get()[22] for i in backMiddleLayer))
+        self.assertTrue(all(i == theCube.get()[31] for i in leftMiddleLayer))
     
     def test_makeMiddleLayerScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
-        result = solve({'cube': cubeStr})
-        myCube = cube.Cube(result['newCube'])
+        myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
+        solveBottomLayer(myCube)
+        solveMiddleLayer(myCube)
         frontMiddleLayer = myCube.get()[3:9]
         rightMiddleLayer = myCube.get()[12:18]
         backMiddleLayer = myCube.get()[21:27]
@@ -94,6 +101,7 @@ class SolveTest(TestCase):
     def test_makeUpCrossScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
@@ -102,6 +110,7 @@ class SolveTest(TestCase):
     def test_makeUpCrossScrambled2(self):
         cubeStr = 'wrybbwygobgwrrwybbgygbgywbowrbgoogoroorgywryrgobwwyyro'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
@@ -109,6 +118,7 @@ class SolveTest(TestCase):
     def test_makeUpSurfaceScrambled(self):
         cubeStr = 'gbwrryrrobroggyyggyoyoogoogbrwobgrbbrbgyybryowwbwwwyww'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)
@@ -118,6 +128,7 @@ class SolveTest(TestCase):
     def test_makeUpSurfaceScrambled2(self):
         cubeStr = 'ygbbbbbbbybgrrrrrryogggggggorrooooooyyryyybyowwwwwwwww'
         myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
         solveBottomLayer(myCube)
         solveMiddleLayer(myCube)
         solveUpCross(myCube)

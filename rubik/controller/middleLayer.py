@@ -1,6 +1,6 @@
 from rubik.model.constants import * # @UnusedWildImport
 from rubik.model.cube import Cube
-from rubik.controller.bottomLayer import solveBottomLayer
+from rubik.controller.bottomLayer import solveBottomLayer, checkBottomLayerSolved
 
 F, f, R, r, B, b, L, l, U, u, D, d = 'F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'
 def solveMiddleLayer(theCube: Cube):
@@ -11,50 +11,49 @@ def solveMiddleLayer(theCube: Cube):
         input:  an instance of the cube class with the bottom layer solved
         output: the rotations required to solve the middle layer  
     '''  
-    while not(theCube.get()[3] == theCube.get()[4] == theCube.get()[5]) or not(theCube.get()[12] == theCube.get()[13] == theCube.get()[14]) or not(theCube.get()[21] == theCube.get()[22] == theCube.get()[23]) or not(theCube.get()[30] == theCube.get()[31] == theCube.get()[32]):
-        if theCube.get()[1] != theCube.get()[40] and theCube.get()[43] != theCube.get()[40]:
-            if theCube.get()[1] == theCube.get()[4]:
-                if theCube.get()[43] == theCube.get()[31]:
-                    theCube.rotate(u + l + u + L)
-                elif theCube.get()[43] == theCube.get()[13]:
-                    theCube.rotate(U + R + U + r)
-            elif theCube.get()[1] == theCube.get()[13]:
-                theCube.rotate(u)
-                if theCube.get()[41] == theCube.get()[4]:
-                    theCube.rotate(u + f + u + F)
-                elif theCube.get()[41] == theCube.get()[22]:
-                    theCube.rotate(U + B + U + b)
-            elif theCube.get()[1] == theCube.get()[22]:
-                theCube.rotate(u + u)
-                if theCube.get()[37] == theCube.get()[13]:
-                    theCube.rotate(u + r + u + R)
-                elif theCube.get()[37] == theCube.get()[31]:
-                    theCube.rotate(U + L + U + l)
-            elif theCube.get()[1] == theCube.get()[31]:
-                theCube.rotate(U)
-                if theCube.get()[39] == theCube.get()[22]:
-                    theCube.rotate(u + b + u + B)
-                elif theCube.get()[39] == theCube.get()[4]:
-                    theCube.rotate(U + F + U + f)
-            # fix down face
+    while not(checkMiddleLayerSolved(theCube)):
+        upMiddleColor = theCube.get()[UMM]
+        topArrays = [[37,19],[39,28],[41,10],[43,1]]
+        middleBlocksArray = [4,13,22,31,40,49]
+        checkMiddleBlocksLeft = [3,12,21,30]
+        checkMiddleBlocksRight = [5,14,23,32]
+        
+        while any(upMiddleColor != theCube.get()[i[0]] and upMiddleColor != theCube.get()[i[1]] for i in topArrays): # looking around the top, while there are still blocks that dont match the UMM (top and side)
+            missingTopArray = next((i for i in topArrays if upMiddleColor != theCube.get()[i[0]] and upMiddleColor != theCube.get()[i[1]]), None) # returning first pair of blocks where the top and side do not match the upper middle middle color
+            matchingMiddleColorForSide = next((i for i in middleBlocksArray if theCube.get()[missingTopArray[1]] == theCube.get()[i]), None) # return corresponding middle block
+            topColor = theCube.get()[missingTopArray[0]]
+            numberOfNeededRotations = int(matchingMiddleColorForSide/9) - int(missingTopArray[1]/9) # if positive, it means middle color match is on a later face
+            if abs(numberOfNeededRotations) > 0:
+                if numberOfNeededRotations > 0:
+                    theCube.rotate(abs(numberOfNeededRotations)*'u')
+                else:
+                    theCube.rotate(abs(numberOfNeededRotations)*'U')
+            middleCubeOffset = int(matchingMiddleColorForSide/9) # 0 for front, 1 for right, 2 for back, 3 for left, 4 for up, 5 for down
+            matchingMiddleColorForTop = next((i for i in middleBlocksArray if topColor == theCube.get()[i]), None) # now find middle block that matches top neighbor
+            numberOfNeededRotationsForTop = int(matchingMiddleColorForTop/9) - middleCubeOffset
+            if numberOfNeededRotationsForTop == -3 or numberOfNeededRotationsForTop == 1: # the result needs to be right-focused
+                theCube.rotateWithOffset(middleCubeOffset, 'URUr')
+            else: #left-focused
+                theCube.rotateWithOffset(middleCubeOffset, 'uluL')
             solveBottomLayer(theCube)
-        # flipped condition
-        else:
-            if theCube.get()[5] == theCube.get()[13]:
-                theCube.rotate(R + U + r)
-            elif theCube.get()[12] == theCube.get()[4]:
-                theCube.rotate(f + u + F)
-            elif theCube.get()[14] == theCube.get()[22]:
-                theCube.rotate(B + U + b)
-            elif theCube.get()[21] == theCube.get()[13]:
-                theCube.rotate(r + u + R)
-            elif theCube.get()[23] == theCube.get()[31]:
-                theCube.rotate(L + U + l)
-            elif theCube.get()[30] == theCube.get()[22]:
-                theCube.rotate(b + u + B)
-            elif theCube.get()[32] == theCube.get()[4]:
-                theCube.rotate(F + U + f)
-            elif theCube.get()[3] == theCube.get()[31]:
-                theCube.rotate(l + u + L)
-            solveBottomLayer(theCube)
-            theCube.rotate(U)
+                
+        if not(checkMiddleLayerSolved(theCube)): # middle layer is still messed up despite satisfying the top conditions
+            badMiddleArrayLeft = next((i for i in checkMiddleBlocksLeft if theCube.get()[i] != theCube.get()[i+1]), None)
+            badMiddleArrayRight = next((i for i in checkMiddleBlocksRight if theCube.get()[i] != theCube.get()[i-1]), None)
+            if badMiddleArrayLeft != None: # the error is indeed on the left side, do a left trigger
+                theCube.rotateWithOffset(int(badMiddleArrayLeft/9), 'luL')
+                solveBottomLayer(theCube)
+            elif badMiddleArrayRight != None: # the error is indeed on the left side, do a left trigger
+                theCube.rotateWithOffset(int(badMiddleArrayRight/9), 'RUr')
+                solveBottomLayer(theCube)
+            else: # don't know what happened, but do a left trigger on the front and hopefully that shuffles things around to fix it
+                #theCube.rotateWithOffset(0, 'luL') 
+                print('hello')               
+            
+def checkMiddleLayerSolved(theCube: Cube) -> bool:
+    cubeStr = theCube.get()
+    midFront = len(set(cubeStr[3:6])) == 1
+    midRight = len(set(cubeStr[12:15])) == 1
+    midLeft = len(set(cubeStr[21:24])) == 1
+    midBack = len(set(cubeStr[30:33])) == 1
+    return midFront and midRight and midLeft and midBack

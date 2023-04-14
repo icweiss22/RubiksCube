@@ -18,6 +18,7 @@ def solve(parms):
         theCube = Cube(cubeStr)
     else:
         result['status'] = 'error: cube is required'
+        return result
     
     validationMessage = theCube.cubeValidation()
     if validationMessage != 'ok':
@@ -48,7 +49,7 @@ def solve(parms):
     sha256Hash.update(itemToTokenize.encode())
     fullToken = sha256Hash.hexdigest()
     result['integrity'] = fullToken
-    result['newCube'] = theCube.get()
+    result['newCube'] = theCube.get() # for testing purposes
     
     return result
 

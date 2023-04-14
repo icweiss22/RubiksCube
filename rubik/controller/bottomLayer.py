@@ -1,6 +1,5 @@
 from rubik.model.constants import *  # @UnusedWildImport
 from rubik.model.cube import Cube
-from rubik.controller.bottomCross import solveBottomCross
 
 def solveBottomLayer(theCube: Cube):
     '''
@@ -10,7 +9,7 @@ def solveBottomLayer(theCube: Cube):
         input:  an instance of the cube class with the down-face cross solved
         output: the rotations required to solve the bottom layer  
     '''    
-    while not(_checkBottomLayerSolved(theCube)): # while the bottom layer is not solved
+    while not(checkBottomLayerSolved(theCube)): # while the bottom layer is not solved
         bottomColor = theCube.get()[49]
         # first, look for any whites in the top row
         topRowArray = [0,2,9,11,18,20,27,29]
@@ -28,18 +27,18 @@ def solveBottomLayer(theCube: Cube):
                     theCube.rotate(abs(numberOfNeededRotations)*'U')
             middleCubeOffset = int(matchingMiddleCube/9) # 0 for front, 1 for right, 2 for back, 3 for left, 4 for up, 5 for down
             if neighborCube % 9 == 0: # cubes on left, left trigger
-                rotateWithOffset(middleCubeOffset, 'luL', theCube)
+                theCube.rotateWithOffset(middleCubeOffset, 'luL')
             else:
-                rotateWithOffset(middleCubeOffset, 'RUr', theCube)
+                theCube.rotateWithOffset(middleCubeOffset, 'RUr')
                 
         if len(set(theCube.get()[45:54])) > 1: # this means the bottom is not all white, and that means there are whites on the bottom rows
             matchingBlock = next((i for i in bottomRowArray if bottomColor == theCube.get()[i]), None)      
             if matchingBlock is None: # the white block is on the top, do a right trigger to get it down
                 theCube.rotate('RUr')
             elif matchingBlock % 9 == 8:
-                rotateWithOffset(int(matchingBlock/9), 'RUrluLluL', theCube)
+                theCube.rotateWithOffset(int(matchingBlock/9), 'RUrluLluL')
             else:
-                rotateWithOffset(int(matchingBlock/9), 'luLRUrRUr', theCube)
+                theCube.rotateWithOffset(int(matchingBlock/9), 'luLRUrRUr')
             
 def returnCorrespondingTopRowBlock(whiteBlock):
     topRowDictionary = {
@@ -54,19 +53,9 @@ def returnCorrespondingTopRowBlock(whiteBlock):
     }
     return topRowDictionary.get(whiteBlock, None)
 
-def rotateWithOffset(offset, direction, theCube: Cube): # accepts offsets 0-3
-    faces = {0: ('F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'),
-             1: ('R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'),
-             2: ('B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'),
-             3: ('L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd')}
 
-    face_map = {'F': 0, 'f': 1, 'R': 2, 'r': 3, 'B': 4, 'b': 5, 'L': 6, 'l': 7, 'U': 8, 'u': 9, 'D': 10, 'd': 11}
-    
-    for char in direction:
-        face = face_map[char]
-        theCube.rotate(faces[offset][face])
             
-def _checkBottomLayerSolved(theCube: Cube) -> bool:
+def checkBottomLayerSolved(theCube: Cube) -> bool:
     cubeStr = theCube.get()
     allBottom = len(set(cubeStr[45:54])) == 1
     botFront = all(cubeStr[4] == cubeStr[i] for i in [6,7,8])

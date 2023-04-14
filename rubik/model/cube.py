@@ -111,3 +111,15 @@ class Cube:
                 rotatingCube[d] = e
                 
         self._cube = ''.join(rotatingCube)
+        
+    def rotateWithOffset(self, offset, direction): # accepts offsets 0-3
+        faces = {0: ('F', 'f', 'R', 'r', 'B', 'b', 'L', 'l', 'U', 'u', 'D', 'd'),
+                 1: ('R', 'r', 'B', 'b', 'L', 'l', 'F', 'f', 'U', 'u', 'D', 'd'),
+                 2: ('B', 'b', 'L', 'l', 'F', 'f', 'R', 'r', 'U', 'u', 'D', 'd'),
+                 3: ('L', 'l', 'F', 'f', 'R', 'r', 'B', 'b', 'U', 'u', 'D', 'd')}
+    
+        face_map = {'F': 0, 'f': 1, 'R': 2, 'r': 3, 'B': 4, 'b': 5, 'L': 6, 'l': 7, 'U': 8, 'u': 9, 'D': 10, 'd': 11}
+        
+        for char in direction:
+            face = face_map[char]
+            self.rotate(faces[offset][face])
