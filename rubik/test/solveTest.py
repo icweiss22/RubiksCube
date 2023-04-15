@@ -182,7 +182,4 @@ class SolveTest(TestCase):
 
         for i in cubeStrings:
             solve({'cube': i})['newCube']
-            
-    def test_specificTest(self):
-        print(solve({'cube': 'f6zzoo6fxofr666zorxozfrofrr6rxxxrxxorzzxzxoz6frozfff66'})['newCube'])
         
