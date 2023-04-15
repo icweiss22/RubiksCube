@@ -43,7 +43,7 @@ def solveBottomLayer(theCube: Cube):
                     else: # its on the right, do two right triggers
                         theCube.rotate('RUrRUr')
                 else: # this is a bizarre situation
-                   solveBottomCross(theCube) 
+                    solveBottomCross(theCube) 
             elif matchingBlock % 9 == 8:
                 theCube.rotateWithOffset(int(matchingBlock/9), 'RUrluLluL')
             else:

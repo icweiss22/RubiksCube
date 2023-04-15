@@ -9,7 +9,6 @@ from rubik.model.constants import * # @UnusedWildImport
 import hashlib
 
 def solve(parms):
-    """Return rotates needed to solve input cube"""
     result = {}
 
     # validation
@@ -25,29 +24,21 @@ def solve(parms):
         result['status'] = validationMessage
         return result
     
-    result['status'] = validationMessage
-    result['solution'] = ''
-    result['integrity'] = ''
-    
     solveBottomCross(theCube)
-    
     solveBottomLayer(theCube)
-    
     solveMiddleLayer(theCube)
-    
     solveUpCross(theCube)
-    
     solveUpSurface(theCube)
-    
     solveUpperLayer(theCube)
-        
     cleanSolution(theCube)
-    result['solution'] = theCube.getSolution()
 
-    itemToTokenize = cubeStr + result['solution'] + 'icw0001'
+    itemToTokenize = cubeStr + theCube.getSolution() + 'icw0001'
     sha256Hash = hashlib.sha256()
     sha256Hash.update(itemToTokenize.encode())
     result['integrity'] = sha256Hash.hexdigest()
+    result['status'] = 'ok'
+    result['solution'] = theCube.getSolution()
+    result['newCube'] = theCube.get()
     
     return result
 

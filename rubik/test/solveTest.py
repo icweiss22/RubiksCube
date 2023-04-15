@@ -7,6 +7,7 @@ from rubik.controller.bottomLayer import solveBottomLayer
 from rubik.controller.middleLayer import solveMiddleLayer
 from rubik.controller.upFaceCross import solveUpCross
 from rubik.controller.upFaceSurface import solveUpSurface
+from rubik.controller.upperLayer import solveUpperLayer, solveUpperCorners
 from rubik.model.constants import *  # @UnusedWildImport
 
 class SolveTest(TestCase):
@@ -145,4 +146,41 @@ class SolveTest(TestCase):
         solveUpSurface(myCube)
         upSurface = myCube.get()[36:44]
         self.assertTrue(len(set(upSurface)) == 1)
-    
+    '''
+    Up Layer
+    '''
+    def test_makeUpperLayerScrambed(self):
+        cubeStr = 'gogggggggorooooooobbbbbbbbbrgrrrrrrryyyyyyyyywwwwwwwww'
+        myCube = cube.Cube(cubeStr)
+        solveUpperLayer(myCube)
+        print(myCube.get())
+        self.assertTrue(len(set(myCube.get()[0:9])) == 1)
+        self.assertTrue(len(set(myCube.get()[9:18])) == 1)
+        self.assertTrue(len(set(myCube.get()[18:27])) == 1)
+        self.assertTrue(len(set(myCube.get()[27:36])) == 1)
+        self.assertTrue(len(set(myCube.get()[36:45])) == 1)
+        self.assertTrue(len(set(myCube.get()[45:54])) == 1)
+        
+    def test_makeUpperLayerScrambed2(self):
+        cubeStr = 'brgrrrrrroobggggggrgroooooogbobbbbbbyyyyyyyyywwwwwwwww'
+        result = solve({'cube': cubeStr})
+        myCube = cube.Cube(result['newCube'])
+        self.assertTrue(len(set(myCube.get()[0:9])) == 1)
+        self.assertTrue(len(set(myCube.get()[9:18])) == 1)
+        self.assertTrue(len(set(myCube.get()[18:27])) == 1)
+        self.assertTrue(len(set(myCube.get()[27:36])) == 1)
+        self.assertTrue(len(set(myCube.get()[36:45])) == 1)
+        self.assertTrue(len(set(myCube.get()[45:54])) == 1)
+    '''
+    Complete Tests 
+    '''
+    def test_solveRubiksCube(self):
+        cubeStrings = ['yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr', 
+                       'gbyorworybowrggbywgbgworbwrooogbgyywyrrbyywwrbyogwbgor', 'wrggrywwwyrrrgyoogyorbooywbwwgybwogrgbbrybogrbbbywgyoo',
+                       'yyogryybwgowbgybrbgwroowwryggbbbwrggyorrygorwoorywbbwo', 'wbybrwyoyobyogworwbowrobbywowoyboryrggrgywbrbgygrwgggr',
+                       'yrwyrowoygbbwgwgoborogoryyygybwboogrwywbywobrbgrrwbggr', 'orrwrgwrygoyrgyrwwobwgoorbyrobybbooobrbwybwyygwbgwggyg']
+
+        for i in cubeStrings:
+            
+            print(solve({'cube': i})['newCube'])
+        
