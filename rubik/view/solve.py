@@ -44,12 +44,10 @@ def solve(parms):
     cleanSolution(theCube)
     result['solution'] = theCube.getSolution()
 
-    itemToTokenize = theCube.getSolution() + cubeStr + 'icw0001'
+    itemToTokenize = cubeStr + result['solution'] + 'icw0001'
     sha256Hash = hashlib.sha256()
     sha256Hash.update(itemToTokenize.encode())
-    fullToken = sha256Hash.hexdigest()
-    result['integrity'] = fullToken
-    result['newCube'] = theCube.get() # for testing purposes
+    result['integrity'] = sha256Hash.hexdigest()
     
     return result
 

@@ -1,5 +1,6 @@
 from rubik.model.constants import *  # @UnusedWildImport
 from rubik.model.cube import Cube
+from rubik.controller.bottomCross import solveBottomCross
 
 def solveBottomLayer(theCube: Cube):
     '''
@@ -15,6 +16,7 @@ def solveBottomLayer(theCube: Cube):
         topRowArray = [0,2,9,11,18,20,27,29]
         bottomRowArray = [6,8,15,17,24,26,33,35]
         middleBlocksArray = [4,13,22,31,40,49]
+        topCornersArray = [36,38,42,44]
         while any(bottomColor == theCube.get()[i] for i in topRowArray):
             matchingCube = next((i for i in topRowArray if bottomColor == theCube.get()[i]), None)
             neighborCube = returnCorrespondingTopRowBlock(matchingCube) # array 0 is the actual corresponding neighbor, 1 is the center of that face
@@ -33,8 +35,15 @@ def solveBottomLayer(theCube: Cube):
                 
         if len(set(theCube.get()[45:54])) > 1: # this means the bottom is not all white, and that means there are whites on the bottom rows
             matchingBlock = next((i for i in bottomRowArray if bottomColor == theCube.get()[i]), None)      
-            if matchingBlock is None: # the white block is on the top, do a right trigger to get it down
-                theCube.rotate('RUr')
+            if matchingBlock is None: # the white block is on the top, do consecutive triggers to get it down
+                topBlock = next((i for i in topCornersArray if bottomColor == theCube.get()[i]), None)
+                if topBlock != None:
+                    if topBlock % 9 == 0 or topBlock % 9 == 6: # its on the left, do two left triggers
+                        theCube.rotate('luLluL')
+                    else: # its on the right, do two right triggers
+                        theCube.rotate('RUrRUr')
+                else: # this is a bizarre situation
+                   solveBottomCross(theCube) 
             elif matchingBlock % 9 == 8:
                 theCube.rotateWithOffset(int(matchingBlock/9), 'RUrluLluL')
             else:

@@ -135,4 +135,14 @@ class SolveTest(TestCase):
         solveUpSurface(myCube)
         upSurface = myCube.get()[36:44]
         self.assertTrue(len(set(upSurface)) == 1)
+    def test_makeUpSurfaceScrambled3(self):
+        cubeStr = 'wbborboorwgowgggygwgyrowrororgrbybgybybyyworrgwwowbyby'
+        myCube = cube.Cube(cubeStr)
+        solveBottomCross(myCube)
+        solveBottomLayer(myCube)
+        solveMiddleLayer(myCube)
+        solveUpCross(myCube)
+        solveUpSurface(myCube)
+        upSurface = myCube.get()[36:44]
+        self.assertTrue(len(set(upSurface)) == 1)
     
