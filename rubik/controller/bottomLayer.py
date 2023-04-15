@@ -44,7 +44,6 @@ def solveBottomLayer(theCube: Cube):
                         theCube.rotate('RUrRUr')
                 else: # this is a bizarre situation
                     solveBottomCross(theCube)
-                    theCube.rotate('u') 
             elif matchingBlock % 9 == 8:
                 theCube.rotateWithOffset(int(matchingBlock/9), 'RUrluLluL')
             else:
