@@ -191,6 +191,6 @@ class SolveTest(TestCase):
     '''
     def test_noExtraneousKeys(self):
         cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr'
-        result = solve({'cube': cubeStr})['newCube']
+        result = solve({'cube': cubeStr})
         self.assertNotIn('newCube', result.keys())
         
