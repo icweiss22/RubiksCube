@@ -7,6 +7,7 @@ from rubik.controller.upperLayer import solveUpperLayer
 from rubik.model.cube import Cube
 from rubik.model.constants import * # @UnusedWildImport
 import hashlib
+import random
 
 def solve(parms):
     result = {}
@@ -24,6 +25,9 @@ def solve(parms):
         result['status'] = validationMessage
         return result
     
+    '''
+    Solving the cube
+    '''
     solveBottomCross(theCube)
     solveBottomLayer(theCube)
     solveMiddleLayer(theCube)
@@ -31,11 +35,20 @@ def solve(parms):
     solveUpSurface(theCube)
     solveUpperLayer(theCube)
     cleanSolution(theCube)
-
+    
+    '''
+    Hashing
+    '''
     itemToTokenize = cubeStr + theCube.getSolution() + 'icw0001'
     sha256Hash = hashlib.sha256()
     sha256Hash.update(itemToTokenize.encode())
-    result['integrity'] = sha256Hash.hexdigest()
+    fullToken = sha256Hash.hexdigest()
+    randomTok = random.randint(0, len(fullToken) - 8)
+    result['integrity'] = fullToken[randomTok : randomTok + 8]
+    
+    '''
+    Return result
+    '''
     result['status'] = 'ok'
     result['solution'] = theCube.getSolution()
     result['newCube'] = theCube.get()
