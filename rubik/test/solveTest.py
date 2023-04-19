@@ -197,5 +197,5 @@ class SolveTest(TestCase):
     def test_integrityRightLength(self):
         cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw'
         result = solve({'cube': cubeStr})
-        self.assertTrue(result['integrity'].length == 8)
+        self.assertTrue(len(result['integrity']) == 8)
         
