@@ -51,7 +51,6 @@ def solve(parms):
     '''
     result['status'] = 'ok'
     result['solution'] = theCube.getSolution()
-    result['newCube'] = theCube.get()
     
     return result
 
