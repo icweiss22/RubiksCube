@@ -44,13 +44,14 @@ def solve(parms):
     sha256Hash.update(itemToTokenize.encode())
     fullToken = sha256Hash.hexdigest()
     randomTok = random.randint(0, len(fullToken) - 8)
-    result['integrity'] = fullToken[randomTok : randomTok + 8]
     
     '''
     Return result
     '''
     result['status'] = 'ok'
     result['solution'] = theCube.getSolution()
+    result['integrity'] = fullToken[randomTok : randomTok + 8]
+
     
     return result
 
