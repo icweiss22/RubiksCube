@@ -194,3 +194,8 @@ class SolveTest(TestCase):
         result = solve({'cube': cubeStr})
         self.assertNotIn('newCube', result.keys())
         
+    def test_integrityRightLength(self):
+        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr'
+        result = solve({'cube': cubeStr})
+        self.assertTrue(result['integrity'].length == 8)
+        
