@@ -190,12 +190,12 @@ class SolveTest(TestCase):
     Miscellaneous Tests
     '''
     def test_noExtraneousKeys(self):
-        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr'
+        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw'
         result = solve({'cube': cubeStr})
         self.assertNotIn('newCube', result.keys())
         
     def test_integrityRightLength(self):
-        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr'
+        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw'
         result = solve({'cube': cubeStr})
         self.assertTrue(result['integrity'].length == 8)
         
