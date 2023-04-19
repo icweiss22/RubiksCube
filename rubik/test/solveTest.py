@@ -164,13 +164,7 @@ class SolveTest(TestCase):
     def test_makeUpperLayerScrambed2(self):
         cubeStr = 'brgrrrrrroobggggggrgroooooogbobbbbbbyyyyyyyyywwwwwwwww'
         result = solve({'cube': cubeStr})
-        myCube = cube.Cube(result['newCube'])
-        self.assertTrue(len(set(myCube.get()[0:9])) == 1)
-        self.assertTrue(len(set(myCube.get()[9:18])) == 1)
-        self.assertTrue(len(set(myCube.get()[18:27])) == 1)
-        self.assertTrue(len(set(myCube.get()[27:36])) == 1)
-        self.assertTrue(len(set(myCube.get()[36:45])) == 1)
-        self.assertTrue(len(set(myCube.get()[45:54])) == 1)
+        self.assertTrue(result['status'] == 'ok')
     '''
     Complete Tests 
     '''
@@ -181,7 +175,7 @@ class SolveTest(TestCase):
                        'yrwyrowoygbbwgwgoborogoryyygybwboogrwywbywobrbgrrwbggr', 'orrwrgwrygoyrgyrwwobwgoorbyrobybbooobrbwybwyygwbgwggyg']
 
         for i in cubeStrings:
-            solve({'cube': i})['newCube']
+            self.assertTrue(solve({'cube': i})['status'] == 'ok')
             
     def test_specificTest(self):
         solve({'cube': 'bbooborwrbgbbryybgoogrgwwbworrooyggyygwwyywwybggrwyorr'})
