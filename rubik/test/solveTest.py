@@ -186,3 +186,11 @@ class SolveTest(TestCase):
     def test_specificTest(self):
         solve({'cube': 'bbooborwrbgbbryybgoogrgwwbworrooyggyygwwyywwybggrwyorr'})
         
+    '''
+    Miscellaneous Tests
+    '''
+    def test_noExtraneousKeys(self):
+        cubeStr = 'yywwroborobbbggwwrygyyoygyyboobbbggorrowyrgogwgbwwrrrw','ygoyrrowbwrbggboowrrooobbogywgybgwgggyyrybrwbwbyowwryr'
+        result = solve({'cube': cubeStr})['newCube']
+        self.assertTrue(result['newCube'] == '')
+        
